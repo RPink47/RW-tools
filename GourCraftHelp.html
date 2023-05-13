@@ -193,6 +193,8 @@
                     "<h2>Selected item</h2><p id=\"Desc\"></p><div><div class='left'><h2>How to craft</h2><ul id=\"CraftFrom\"></ul></div><div class='right'><h2>Use it to craft</h2><ul id=\"CraftTo\"></ul></div></div>"
                 document.getElementById("Desc").innerHTML = SelItem + '<img src="' + '' + '">'
                 filter()
+                //scroll it into wiew
+                document.getElementById("CraftFrom").scrollIntoView(true,{ behavior: "smooth" });
             }
         };
         //filter the crafts possible with the item+list in html and how to create the item+list them in html
@@ -219,6 +221,7 @@
                 </span>=<span>${c}</span>`
             )
         }
+        //lists every element of value in tag ElId
         function list(ElId, value) {
             if (value.length > 0) {
                 document.getElementById(ElId).innerHTML = "<li>" + (value).join("</li><li>") + '</li>'
@@ -226,6 +229,7 @@
                 document.getElementById(ElId).innerHTML = ""
             }
         }
+        //lists values for the search - includes onclick jumps
         function listSearch(ElId, value) {
             if (value.length > 0) {
                 document.getElementById(ElId).innerHTML = value.map(e => `<li><span class='clickable' onclick=\"SetSelItem('${e}')\">${e}</span></li>`).join("")
