@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Gourmand Crafting Helper</title>
+    <script src="DevTools.js"></script>
+    <!-- Css -->
+    <style>
+        .left {
+            width: 50%;
+            float: left;
+        }
+
+        .right {
+            width: 50%;
+            float: right;
+        }
+
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: rgb(37, 37, 37);
+            color: white;
+            text-align: center;
+            border-top: black 10px solid;
+            height: 150px;
+        }
+
+        .clickable:hover {
+            cursor: pointer;
+            color: #fff;
+        }
+        body {
+            background-color: rgb(43, 43, 43);
+            color: #ccc;
+            padding: 1%;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+        a {
+            color: rgb(0, 132, 255);
+        }
+    </style>
+    <!-- JavaScript -->
+    <script>//Define some global scope variables
+        const items = [
+            { "Name": "rubbish" },
+            { "Name": "flashbang" },
+            { "Name": "lantern" },
+            { "Name": "vulture mask" },
+            { "Name": "pearl" },
+            { "Name": "spore puff" },
+            { "Name": "beehive" },
+            { "Name": "blue fruit" },
+            { "Name": "neuron fly" },
+            { "Name": "overseer eye" },
+            { "Name": "bubble fruit" },
+            { "Name": "jellyfish" },
+            { "Name": "lilypuck" },
+            { "Name": "karma flower" },
+            { "Name": "grenade" },
+            { "Name": "mushroom" },
+            { "Name": "cherrybomb" },
+            { "Name": "slime mold" },
+            { "Name": "batnip" },
+            { "Name": "eggbug egg" },
+            { "Name": "noodlefly egg" }
+        ];
+        const crafts = [
+            { a: 'rubbish', b: 'flashbang', out: 'lantern' },
+            { a: 'rubbish', b: 'vulture mask', out: 'pearl' },
+            { a: 'rubbish', b: 'spore puff', out: 'beehive' },
+            { a: 'rubbish', b: 'blue fruit', out: 'flashbang' },
+            { a: 'rubbish', b: 'neuron fly', out: 'overseer eye' },
+            { a: 'rubbish', b: 'bubble fruit', out: 'jellyfish' },
+            { a: 'rubbish', b: 'jellyfish', out: 'lilypuck' },
+            { a: 'rubbish', b: 'lantern', out: 'flashbang' },
+            { a: 'rubbish', b: 'karma flower', out: 'grenade' },
+            { a: 'rubbish', b: 'mushroom', out: 'spore puff' },
+            { a: 'rubbish', b: 'cherrybomb', out: 'grenade' },
+            { a: 'rubbish', b: 'slime mold', out: 'lantern' },
+            { a: 'rubbish', b: 'batnip', out: 'cherrybomb' },
+            { a: 'rubbish', b: 'grenade', out: 'pearl' },
+            { a: 'rubbish', b: 'beehive', out: 'spore puff' },
+            { a: 'rubbish', b: 'eggbug egg', out: 'noodlefly egg' }
+        ];
+
+        SelItem = ''
+        //Handles input and search narrowing down
+        function input(Searched) {
+            //filter items and list them in html
+            var filtered = items.filter(e => e.Name.includes(Searched))
+            listSearch("FilteredItems", filtered.map(e => e.Name))           
+        };
+        //sets SelItem to Item and shows item desc and info
+        function SetSelItem(Item) {
+            SelItem = Item
+            if (SelItem == '') {
+                document.getElementById("SelItemData").innerHTML = ""
+            } else {
+                document.getElementById("SelItemData").innerHTML =
+                    "<h2>Selected item</h2><p id=\"Desc\"></p><div><div class='left'><h2>How to craft</h2><ul id=\"CraftFrom\"></ul></div><div class='right'><h2>Use it to craft</h2><ul id=\"CraftTo\"></ul></div></div>"
+                document.getElementById("Desc").innerHTML = SelItem + '<img src="' + '' + '">'
+                filter()
+            }
+        };
+        //filter the crafts possible with the item+list in html and how to create the item+list them in html
+        function filter() {
+            var filtered = crafts.filter(e => ((e.a == SelItem) || (e.b == SelItem)));
+            list('CraftTo', filtered.map(e => mapOnClickBC(
+                (e.a == SelItem) ? e.a : e.b, (e.a == SelItem) ? e.b : e.a, e.out)))
+            var filtered = crafts.filter(e => e.out == SelItem);
+            list("CraftFrom", filtered.map(e => mapOnClickAB(e.a, e.b, e.out)))
+        };
+        //maps on click jump events for items for B,C
+        function mapOnClickBC(a, b, c) {
+            return (
+                `<span>${a}
+                </span>+<span class='clickable' onclick='SetSelItem("${b}")'>${b}
+                </span>=<span class='clickable' onclick='SetSelItem("${c}")'>${c}</span>`
+            )
+        }
+        //maps on click jump events for items for A,B
+        function mapOnClickAB(a, b, c) {
+            return (
+                `<span class='clickable' onclick='SetSelItem("${a}")'>${a}
+                </span>+<span class='clickable' onclick='SetSelItem("${b}")'>${b}
+                </span>=<span>${c}</span>`
+            )
+        }
+        function list(ElId, value) {
+            if (value.length > 0) {
+                document.getElementById(ElId).innerHTML = "<li>" + (value).join("</li><li>") + '</li>'
+            } else {
+                document.getElementById(ElId).innerHTML = ""
+            }
+        }
+        function listSearch(ElId, value) {
+            if (value.length > 0) {
+                document.getElementById(ElId).innerHTML = value.map(e => `<li><span class='clickable' onclick=\"SetSelItem('${e}')\">${e}</span></li>`).join("")
+            } else {
+                document.getElementById(ElId).innerHTML = ""
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Gourmand Crafting Helper</h1>
+    <button type="button" style="float: right;background-color: rgb(43, 43, 43);color: #ddd;" onclick="">
+        Available Items
+    </button>
+    <input type="text" id="Item" placeholder="Item Name.." style="background-color: rgb(43, 43, 43);color: #ddd;"
+        oninput="input(this.value)" onload="input(this.value)">
+    <section class="main">
+        <ul id="FilteredItems"></ul>
+        <div id="SelItemData"></div>
+        <div style="clear: both;padding-bottom: 150px;"></div>
+    </section>
+    <div class="footer">
+        <h2>Usefull links/info</h2>
+        <p>
+            <a href="https://henpemaz.github.io/Rain-World-Interactive-Map/">Interactive Map</a>/<a
+                href="https://rainworld.miraheze.org/wiki/Gourmand">Gourmand Wiki</a><br>
+            Crafting can be performed by holding the Up and Grab inputs while standing still.
+        </p>
+    </div>
+</body>
+</html>
