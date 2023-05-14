@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Gourmand Crafting Helper</title>
     <script src="DevTools.js"></script>
@@ -9,10 +10,12 @@
             width: 50%;
             float: left;
         }
+
         .right {
             width: 50%;
             float: right;
         }
+
         .footer {
             position: fixed;
             left: 0;
@@ -24,16 +27,19 @@
             border-top: black 10px solid;
             height: 150px;
         }
+
         .clickable:hover {
             cursor: pointer;
             color: #fff;
         }
+
         body {
             background-color: rgb(43, 43, 43);
             color: #ccc;
             padding: 1%;
             font-family: Verdana, Geneva, Tahoma, sans-serif;
         }
+
         a {
             color: rgb(0, 132, 255);
         }
@@ -168,7 +174,9 @@
             { a: 'vulture mask', b: 'hazer', out: 'seed' },
         ];
 
-        SelItem = ''
+        var selItem = ''
+        var available = []
+
     </script>
     <script>
         //Handles input and search narrowing down
@@ -177,41 +185,41 @@
             var filtered = items.filter(e => e.Name.includes(Searched))
             listSearch("FilteredItems", filtered.map(e => e.Name))
         };
-        //sets SelItem to Item and shows item desc and info
-        function SetSelItem(Item) {
-            SelItem = Item
-            if (SelItem == '') {
-                document.getElementById("SelItemData").innerHTML = ""
+        //sets selItem to Item and shows item desc and info
+        function SetselItem(Item) {
+            selItem = Item
+            if (selItem == '') {
+                document.getElementById("selItemData").innerHTML = ""
             } else {
-                document.getElementById("SelItemData").innerHTML =
+                document.getElementById("selItemData").innerHTML =
                     "<h2>Selected item</h2><p id=\"Desc\"></p><div><div class='left'><h2>How to craft</h2><ul id=\"CraftFrom\"></ul></div><div class='right'><h2>Use it to craft</h2><ul id=\"CraftTo\"></ul></div></div>"
-                document.getElementById("Desc").innerHTML = SelItem + '<img src="' + '' + '">'
+                document.getElementById("Desc").innerHTML = selItem + '<img src="' + '' + '">'
                 filter()
                 //scroll it into wiew
-                document.getElementById("CraftFrom").scrollIntoView(true,{ behavior: "smooth" });
+                document.getElementById("CraftFrom").scrollIntoView(true, { behavior: "smooth" });
             }
         };
         //filter the crafts possible with the item+list in html and how to create the item+list them in html
         function filter() {
-            var filtered = crafts.filter(e => ((e.a == SelItem) || (e.b == SelItem)));
+            var filtered = crafts.filter(e => ((e.a == selItem) || (e.b == selItem)));
             list('CraftTo', filtered.map(e => mapOnClickBC(
-                (e.a == SelItem) ? e.a : e.b, (e.a == SelItem) ? e.b : e.a, e.out)))
-            var filtered = crafts.filter(e => e.out == SelItem);
+                (e.a == selItem) ? e.a : e.b, (e.a == selItem) ? e.b : e.a, e.out)))
+            var filtered = crafts.filter(e => e.out == selItem);
             list("CraftFrom", filtered.map(e => mapOnClickAB(e.a, e.b, e.out)))
         };
         //maps on click jump events for items for B,C
         function mapOnClickBC(a, b, c) {
             return (
                 `<span>${a}
-                </span>+<span class='clickable' onclick='SetSelItem("${b}")'>${b}
-                </span>=<span class='clickable' onclick='SetSelItem("${c}")'>${c}</span>`
+                </span>+<span class='clickable' onclick='SetselItem("${b}")'>${b}
+                </span>=<span class='clickable' onclick='SetselItem("${c}")'>${c}</span>`
             )
         }
         //maps on click jump events for items for A,B
         function mapOnClickAB(a, b, c) {
             return (
-                `<span class='clickable' onclick='SetSelItem("${a}")'>${a}
-                </span>+<span class='clickable' onclick='SetSelItem("${b}")'>${b}
+                `<span class='clickable' onclick='SetselItem("${a}")'>${a}
+                </span>+<span class='clickable' onclick='SetselItem("${b}")'>${b}
                 </span>=<span>${c}</span>`
             )
         }
@@ -226,20 +234,37 @@
         //lists values for the search - includes onclick jumps
         function listSearch(ElId, value) {
             if (value.length > 0) {
-                document.getElementById(ElId).innerHTML = value.map(e => `<li><span class='clickable' onclick=\"SetSelItem('${e}')\">${e}</span></li>`).join("")
+                document.getElementById(ElId).innerHTML = value.map(e => `<li><span class='clickable' onclick=\"SetselItem('${e}')\">${e}</span></li>`).join("")
             } else {
                 document.getElementById(ElId).innerHTML = ""
             }
         }
+
+        function craftableFrom(available) {
+            console.log('craftable Called');
+            var filteredCrafts = crafts.filter(e => ((available.includes(e.a)) && (available.includes(e.b))))
+            var paths = []
+            filteredCrafts.forEach(e => {
+                var tmp = filteredCrafts
+                var index = available.findIndex(i => i == e.a)
+                tmp.slice(index)
+                index = available.findIndex(i => i == e.b)
+                tmp.slice(index)
+                paths.push({ 'craft': index, 'path': (craftableFrom(tmp)) })
+            });
+            return (paths)
+        }
+
     </script>
 </head>
+
 <body>
     <h1>Gourmand Crafting Helper</h1>
     <input type="text" id="Item" placeholder="Item Name.." style="background-color: rgb(43, 43, 43);color: #ddd;"
         oninput="input(this.value)" onload="input(this.value)">
     <section class="main">
         <ul id="FilteredItems"></ul>
-        <div id="SelItemData"></div>
+        <div id="selItemData"></div>
         <div style="clear: both;padding-bottom: 150px;"></div>
     </section>
     <div class="footer">
@@ -250,5 +275,9 @@
             Crafting can be performed by holding the Up and Grab inputs while standing still.
         </p>
     </div>
+    <dialog>
+
+    </dialog>
 </body>
+
 </html>
