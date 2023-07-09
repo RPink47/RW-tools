@@ -43,6 +43,7 @@
         a {
             color: rgb(0, 132, 255);
         }
+
     </style>
     <!-- JavaScript -->
     <script>//Define some global scope variables
@@ -258,12 +259,12 @@
                     //shalow copy the array "items" to "tmp"
                     let tmp = [...items]
                     //delete the items used by the craft from the array "tmp"
-                    tmp.splice((tmp.findIndex( i => i == recipe.a )), 1)
-                    tmp.splice((tmp.findIndex( i => i == recipe.b )), 1)
+                    tmp.splice((tmp.findIndex(i => i == recipe.a)), 1)
+                    tmp.splice((tmp.findIndex(i => i == recipe.b)), 1)
                     //add the item given by the craft to the array "tmp"
                     tmp.push(recipe.out)
                     //put the new state in the "states" array
-                    states.push({paths: [{recipe: recipe, from: state}], availableItems: tmp})
+                    states.push({ paths: [{ recipe: recipe, from: state }], availableItems: tmp })
                 });
             }
             return (states)
