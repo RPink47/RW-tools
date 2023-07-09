@@ -241,18 +241,32 @@
         }
 
         function craftableFrom(available) {
-            console.log('craftable Called');
-            var filteredCrafts = crafts.filter(e => ((available.includes(e.a)) && (available.includes(e.b))))
-            var paths = []
-            filteredCrafts.forEach(e => {
-                var tmp = filteredCrafts
-                var index = available.findIndex(i => i == e.a)
-                tmp.slice(index)
-                index = available.findIndex(i => i == e.b)
-                tmp.slice(index)
-                paths.push({ 'craft': index, 'path': (craftableFrom(tmp)) })
-            });
-            return (paths)
+            //makes var "states" and add default state
+            var states = [{ paths: null, availableItems: available }]
+            //for loop  loop through every state (even the ones added during looping)
+            for (let state = 0; state < states.length; state++) {
+                //gets the items of the current state
+                var items = states[state].availableItems
+                //filtering crafts so only the ones posible on the current state stay
+                let filteredCrafts = crafts.filter(
+                    //some complexiti in getting the variable "items" inside the lambda
+                    (function (items) {
+                        return recipe => items.includes(recipe.a) && items.includes(recipe.b);
+                    })(items));
+                //make a new state for every craft
+                filteredCrafts.forEach(recipe => {
+                    //shalow copy the array "items" to "tmp"
+                    let tmp = [...items]
+                    //delete the items used by the craft from the array "tmp"
+                    tmp.splice((tmp.findIndex( i => i == recipe.a )), 1)
+                    tmp.splice((tmp.findIndex( i => i == recipe.b )), 1)
+                    //add the item given by the craft to the array "tmp"
+                    tmp.push(recipe.out)
+                    //put the new state in the "states" array
+                    states.push({paths: [{recipe: recipe, from: state}], availableItems: tmp})
+                });
+            }
+            return (states)
         }
 
     </script>
