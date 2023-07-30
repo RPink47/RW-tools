@@ -1,4 +1,4 @@
-function MakeItemList() {
+function makeItemList() {
     var out = []
     crafts.forEach(e => {
         out.push(e.a)
@@ -13,4 +13,13 @@ function uniq(a) {
     return a.filter(function (item) {
         return seen.hasOwnProperty(item) ? false : (seen[item] = true);
     });
+}
+
+function linkItemsList() {
+    var out = []
+    items.forEach(e => {
+        e.wiki = "https://rainworld.miraheze.org/wiki/".concat(e.Name.replace(" ","_"))
+        out.push(e)
+    })
+    console.log(JSON.stringify(out));
 }
