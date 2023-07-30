@@ -43,45 +43,43 @@
         a {
             color: rgb(0, 132, 255);
         }
-
     </style>
     <!-- JavaScript -->
     <script>//Define some global scope variables
         const items = [
-            { "Name": "rubbish" },
-            { "Name": "flashbang" },
-            { "Name": "lantern" },
-            { "Name": "vulture mask" },
-            { "Name": "pearl" },
-            { "Name": "spore puff" },
-            { "Name": "beehive" },
-            { "Name": "blue fruit" },
-            { "Name": "neuron fly" },
-            { "Name": "overseer eye" },
-            { "Name": "bubble fruit" },
-            { "Name": "jellyfish" },
-            { "Name": "lilypuck" },
-            { "Name": "karma flower" },
-            { "Name": "grenade" },
-            { "Name": "mushroom" },
-            { "Name": "cherrybomb" },
-            { "Name": "slime mold" },
-            { "Name": "batnip" },
-            { "Name": "eggbug egg" },
-            { "Name": "noodlefly egg" },
-            { "Name": "batfly" },
-            { "Name": "bubbleweed" },
-            { "Name": "singularity bomb" },
-            { "Name": "fire egg" },
-            { "Name": "seed" },
-            { "Name": "gooieduck" },
-            { "Name": "glow weed" },
-            { "Name": "dandelion peach" },
-            { "Name": "infant centipede" },
-            { "Name": "vulture grub" },
-            { "Name": "noodlefly" },
-            { "Name": "hazer" },
-        ];
+            { "Name": "rubbish", "wiki": "https://rainworld.miraheze.org/wiki/rubbish" },
+            { "Name": "flashbang", "wiki": "https://rainworld.miraheze.org/wiki/flashbang" },
+            { "Name": "lantern", "wiki": "https://rainworld.miraheze.org/wiki/lantern" },
+            { "Name": "vulture mask", "wiki": "https://rainworld.miraheze.org/wiki/vulture_mask" },
+            { "Name": "pearl", "wiki": "https://rainworld.miraheze.org/wiki/pearl" },
+            { "Name": "spore puff", "wiki": "https://rainworld.miraheze.org/wiki/spore_puff" },
+            { "Name": "beehive", "wiki": "https://rainworld.miraheze.org/wiki/beehive" },
+            { "Name": "blue fruit", "wiki": "https://rainworld.miraheze.org/wiki/blue_fruit" },
+            { "Name": "neuron fly", "wiki": "https://rainworld.miraheze.org/wiki/neuron_fly" },
+            { "Name": "overseer eye", "wiki": "https://rainworld.miraheze.org/wiki/overseer_eye" },
+            { "Name": "bubble fruit", "wiki": "https://rainworld.miraheze.org/wiki/bubble_fruit" },
+            { "Name": "jellyfish", "wiki": "https://rainworld.miraheze.org/wiki/jellyfish" },
+            { "Name": "lilypuck", "wiki": "https://rainworld.miraheze.org/wiki/lilypuck" },
+            { "Name": "karma flower", "wiki": "https://rainworld.miraheze.org/wiki/karma_flower" },
+            { "Name": "grenade", "wiki": "https://rainworld.miraheze.org/wiki/grenade" },
+            { "Name": "mushroom", "wiki": "https://rainworld.miraheze.org/wiki/mushroom" },
+            { "Name": "cherrybomb", "wiki": "https://rainworld.miraheze.org/wiki/cherrybomb" },
+            { "Name": "slime mold", "wiki": "https://rainworld.miraheze.org/wiki/slime_mold" },
+            { "Name": "batnip", "wiki": "https://rainworld.miraheze.org/wiki/batnip" },
+            { "Name": "eggbug egg", "wiki": "https://rainworld.miraheze.org/wiki/eggbug_egg" },
+            { "Name": "noodlefly egg", "wiki": "https://rainworld.miraheze.org/wiki/noodlefly_egg" },
+            { "Name": "batfly", "wiki": "https://rainworld.miraheze.org/wiki/batfly" },
+            { "Name": "bubbleweed", "wiki": "https://rainworld.miraheze.org/wiki/bubbleweed" },
+            { "Name": "singularity bomb", "wiki": "https://rainworld.miraheze.org/wiki/singularity_bomb" },
+            { "Name": "fire egg", "wiki": "https://rainworld.miraheze.org/wiki/fire_egg" },
+            { "Name": "seed", "wiki": "https://rainworld.miraheze.org/wiki/seed" },
+            { "Name": "gooieduck", "wiki": "https://rainworld.miraheze.org/wiki/gooieduck" },
+            { "Name": "glow weed", "wiki": "https://rainworld.miraheze.org/wiki/glow_weed" },
+            { "Name": "dandelion peach", "wiki": "https://rainworld.miraheze.org/wiki/dandelion_peach" },
+            { "Name": "infant centipede", "wiki": "https://rainworld.miraheze.org/wiki/infant_centipede" },
+            { "Name": "vulture grub", "wiki": "https://rainworld.miraheze.org/wiki/vulture_grub" },
+            { "Name": "noodlefly", "wiki": "https://rainworld.miraheze.org/wiki/noodlefly" },
+            { "Name": "hazer", "wiki": "https://rainworld.miraheze.org/wiki/hazer" }];
         const crafts = [
             { a: 'rubbish', b: 'flashbang', out: 'lantern' },
             { a: 'rubbish', b: 'vulture mask', out: 'pearl' },
@@ -177,6 +175,7 @@
 
         var selItem = ''
         var available = []
+        var mode = "ItemInfo"
 
     </script>
     <script>
@@ -186,15 +185,25 @@
             var filtered = items.filter(e => e.Name.includes(Searched))
             listSearch("FilteredItems", filtered.map(e => e.Name))
         };
+
+        function clicked(item) {
+            if (mode == "ItemInfo") {
+                setselItem(item)
+            } else {
+                if (!available.some(e => e.item === item)) {
+                    available.push({ item: item, amount: 1 })
+                }
+            }
+        }
         //sets selItem to Item and shows item desc and info
-        function SetselItem(Item) {
+        function setselItem(Item) {
             selItem = Item
             if (selItem == '') {
                 document.getElementById("selItemData").innerHTML = ""
             } else {
                 document.getElementById("selItemData").innerHTML =
                     "<h2>Selected item</h2><p id=\"Desc\"></p><div><div class='left'><h2>How to craft</h2><ul id=\"CraftFrom\"></ul></div><div class='right'><h2>Use it to craft</h2><ul id=\"CraftTo\"></ul></div></div>"
-                document.getElementById("Desc").innerHTML = selItem + '<img src="' + '' + '">'
+                document.getElementById("Desc").innerHTML = '<a href="'+  + selItem + '<img src="' + '' + '">'
                 filter()
                 //scroll it into wiew
                 document.getElementById("CraftFrom").scrollIntoView(true, { behavior: "smooth" });
@@ -212,15 +221,15 @@
         function mapOnClickBC(a, b, c) {
             return (
                 `<span>${a}
-                </span>+<span class='clickable' onclick='SetselItem("${b}")'>${b}
-                </span>=<span class='clickable' onclick='SetselItem("${c}")'>${c}</span>`
+                </span>+<span class='clickable' onclick='setselItem("${b}")'>${b}
+                </span>=<span class='clickable' onclick='setselItem("${c}")'>${c}</span>`
             )
         }
         //maps on click jump events for items for A,B
         function mapOnClickAB(a, b, c) {
             return (
-                `<span class='clickable' onclick='SetselItem("${a}")'>${a}
-                </span>+<span class='clickable' onclick='SetselItem("${b}")'>${b}
+                `<span class='clickable' onclick='setselItem("${a}")'>${a}
+                </span>+<span class='clickable' onclick='setselItem("${b}")'>${b}
                 </span>=<span>${c}</span>`
             )
         }
@@ -235,7 +244,7 @@
         //lists values for the search - includes onclick jumps
         function listSearch(ElId, value) {
             if (value.length > 0) {
-                document.getElementById(ElId).innerHTML = value.map(e => `<li><span class='clickable' onclick=\"SetselItem('${e}')\">${e}</span></li>`).join("")
+                document.getElementById(ElId).innerHTML = value.map(e => `<li><span class='clickable' onclick=\"clicked('${e}')\">${e}</span></li>`).join("")
             } else {
                 document.getElementById(ElId).innerHTML = ""
             }
@@ -270,12 +279,15 @@
             return (states)
         }
 
+        function setMode(newMode) {
+            mode = newMode
+        }
     </script>
 </head>
 
 <body>
     <h1>Gourmand Crafting Helper</h1>
-    <input type="text" id="Item" placeholder="Item Name.." style="background-color: rgb(43, 43, 43);color: #ddd;"
+    <input type="text" id="ItemSearch" placeholder="Item Name.." style="background-color: rgb(43, 43, 43);color: #ddd;"
         oninput="input(this.value)" onload="input(this.value)">
     <section class="main">
         <ul id="FilteredItems"></ul>
@@ -285,8 +297,8 @@
     <div class="footer">
         <h2>Usefull links/info</h2>
         <p>
-            <a href="https://henpemaz.github.io/Rain-World-Interactive-Map/">Interactive Map</a>/<a
-                href="https://rainworld.miraheze.org/wiki/Gourmand">Gourmand Wiki</a><br>
+            <a href="https://rain-world-map.github.io/map.html?slugcat=gourmand&region=SH&room=SH_GOR02">Interactive
+                Map</a>/<a href="https://rainworld.miraheze.org/wiki/Gourmand">Gourmand Wiki</a><br>
             Crafting can be performed by holding the Up and Grab inputs while standing still.
         </p>
     </div>
