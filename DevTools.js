@@ -5,7 +5,10 @@ function makeItemList() {
         out.push(e.b)
         out.push(e.out)
     });
-    console.log(JSON.stringify((uniq(out)).map(e => { return { Name: e } })));
+    out = (uniq(out))
+    out = out.map(e => e.split(" ").map(e => e.charAt(0).toUpperCase() + e.slice(1)))
+    out = out.map(e => { return { name: e.join(" "), wiki: "https://rainworld.miraheze.org/wiki/".concat(e.join("_")) } })
+    console.log(JSON.stringify(out));
 }
 
 function uniq(a) {
@@ -13,13 +16,4 @@ function uniq(a) {
     return a.filter(function (item) {
         return seen.hasOwnProperty(item) ? false : (seen[item] = true);
     });
-}
-
-function linkItemsList() {
-    var out = []
-    items.forEach(e => {
-        e.wiki = "https://rainworld.miraheze.org/wiki/".concat(e.Name.replace(" ","_"))
-        out.push(e)
-    })
-    console.log(JSON.stringify(out));
 }
