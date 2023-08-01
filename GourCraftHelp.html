@@ -203,7 +203,7 @@
             } else {
                 document.getElementById("selItemData").innerHTML =
                     "<h2>Selected item</h2><p id=\"Desc\"></p><div><div class='left'><h2>How to craft</h2><ul id=\"CraftFrom\"></ul></div><div class='right'><h2>Use it to craft</h2><ul id=\"CraftTo\"></ul></div></div>"
-                document.getElementById("Desc").innerHTML = '<a href="' + selItem.wiki + '">' + selItem.name + '</a><img src="' + selItem.img + '">'
+                document.getElementById("Desc").innerHTML = ('<a href="' + (selItem.wiki || "") + '">' + selItem.name + '</a><img src="' + (selItem.img || "") + '">')
                 filter()
                 //scroll it into wiew
                 document.getElementById("CraftFrom").scrollIntoView(true, { behavior: "smooth" });
@@ -278,14 +278,13 @@
             }
             return (states)
         }
-
         function setMode(newMode) {
             mode = newMode
         }
     </script>
 </head>
 
-<body>
+<body onload="input('')">
     <h1>Gourmand Crafting Helper</h1>
     <input type="text" id="ItemSearch" placeholder="Item name.." style="background-color: rgb(43, 43, 43);color: #ddd;"
         oninput="input(this.value)" onload="input(this.value)">
@@ -302,10 +301,6 @@
             Crafting can be performed by holding the Up and Grab inputs while standing still.
         </p>
     </div>
-    <dialog>
-
-    </dialog>
 </body>
-<p onload="input('')"></p>
 
 </html>
