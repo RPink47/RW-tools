@@ -6,14 +6,9 @@
     <script src="DevTools.js"></script>
     <!-- Css -->
     <style>
-        .left {
+        .half {
             width: 50%;
             float: left;
-        }
-
-        .right {
-            width: 50%;
-            float: right;
         }
 
         .footer {
@@ -177,7 +172,45 @@
         var available = []
         var mode = "ItemInfo"
 
+
+        function uniq(a) {
+            var seen = {};
+            return a.filter(function (item) {
+                return seen.hasOwnProperty(item) ? false : (seen[item] = true);
+            });
+        }
+
+        function setupTable() {
+            var out = []
+            crafts.forEach(e => {
+                out.push(e.a)
+                out.push(e.b)
+            });
+            out = (uniq(out))
+            out = out.map(e => e.split(" ").map(e => e.charAt(0).toUpperCase() + e.slice(1)))
+
+            out.forEach(e => {
+                let tmp = (".col_" + e.join(""))
+                sheet.insertRule(tmp + "{}");
+                Object.defineProperty(RuleMap, e.join(" "), { value: getCssStyle(tmp) })
+            });
+        }
+        function getCssStyle(selector) {
+            const len = rules.length;
+            for (let i = 0; i < len; i++) {
+                if (rules[i].selectorText === selector) {
+                    return rules[i];
+                }
+            }
+            return null;
+        }
+        var RuleMap = {}
+        const sheet = document.styleSheets[0];
+        const rules = sheet.cssRules || sheet.rules;
+        setupTable()
     </script>
+
+
     <script>
         //Handles input and search narrowing down
         function input(searched) {
@@ -202,7 +235,7 @@
                 document.getElementById("selItemData").innerHTML = ""
             } else {
                 document.getElementById("selItemData").innerHTML =
-                    "<h2>Selected item</h2><p id=\"Desc\"></p><div><div class='left'><h2>How to craft</h2><ul id=\"CraftFrom\"></ul></div><div class='right'><h2>Use it to craft</h2><ul id=\"CraftTo\"></ul></div></div>"
+                    "<h2>Selected item</h2><p id=\"Desc\"></p><div><div class='half'><h2>How to craft</h2><ul id=\"CraftFrom\"></ul></div><div class='half'><h2>Use it to craft</h2><ul id=\"CraftTo\"></ul></div></div>"
                 document.getElementById("Desc").innerHTML = ('<a href="' + (selItem.wiki || "") + '">' + selItem.name + '</a><img src="' + (selItem.img || "") + '">')
                 filter()
                 //scroll it into wiew
@@ -211,10 +244,10 @@
         };
         //filter the crafts possible with the item+list in html and how to create the item+list them in html
         function filter() {
-            var filtered = crafts.filter(e => ((e.a == selItem.name) || (e.b == selItem.name)));
+            var filtered = crafts.filter(e => ((e.a.toLowerCase() == selItem.name.toLowerCase()) || (e.b.toLowerCase() == selItem.name.toLowerCase())));
             list('CraftTo', filtered.map(e => mapOnClickBC(
-                (e.a == selItem.name) ? e.a : e.b, (e.a == selItem.name) ? e.b : e.a, e.out)))
-            var filtered = crafts.filter(e => e.out == selItem.name);
+                (e.a.toLowerCase() == selItem.name.toLowerCase()) ? e.a : e.b, (e.a.toLowerCase() == selItem.name.toLowerCase()) ? e.b : e.a, e.out)))
+            var filtered = crafts.filter(e => e.out.toLowerCase() == selItem.name.toLowerCase());
             list("CraftFrom", filtered.map(e => mapOnClickAB(e.a, e.b, e.out)))
         };
         //maps on click jump events for items for B,C
@@ -229,8 +262,8 @@
         function mapOnClickAB(a, b, c) {
             return (
                 `<span class='clickable' onclick='setSelItem("${a}")'>${a}
-                </span>+<span class='clickable' onclick='setSelItem("${b}")'>${b}
-                </span>=<span>${c}</span>`
+                </span>+ <span class='clickable' onclick='setSelItem("${b}")'>${b}
+                </span>= <span>${c}</span>`
             )
         }
         //lists every element of value in tag ElId
@@ -281,6 +314,13 @@
         function setMode(newMode) {
             mode = newMode
         }
+        function modal(modal, show) {
+            if (show) {
+                document.getElementById(modal).showModal()
+            } else {
+                document.getElementById(modal).close()
+            }
+        }
     </script>
 </head>
 
@@ -288,8 +328,21 @@
     <h1>Gourmand Crafting Helper</h1>
     <input type="text" id="ItemSearch" placeholder="Item name.." style="background-color: rgb(43, 43, 43);color: #ddd;"
         oninput="input(this.value)" onload="input(this.value)">
+    <button style="float: right;" onclick="modal('ItemTableM', true)">
+        <div style="padding: 1mm;">Table</div>
+    </button>
     <section class="main">
         <ul id="FilteredItems"></ul>
+        <dialog id="ItemTableM" style="height: 85%; width: 85%;">
+            <h2 style="text-align: center;">Interactive crafts table</h2>
+            <p style="text-align: center;">Work in progres</p>
+            <table></table>
+            <p style="text-align: center;">
+            <button onclick="modal('ItemTableM', false)">
+                <div style="padding: 1mm;">Close</div>
+            </button>
+            </p>
+        </dialog>
         <div id="selItemData"></div>
         <div style="clear: both;padding-bottom: 150px;"></div>
     </section>

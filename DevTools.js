@@ -10,10 +10,3 @@ function makeItemList() {
     out = out.map(e => { return { name: e.join(" "), wiki: "https://rainworld.miraheze.org/wiki/".concat(e.join("_")) } })
     console.log(JSON.stringify(out));
 }
-
-function uniq(a) {
-    var seen = {};
-    return a.filter(function (item) {
-        return seen.hasOwnProperty(item) ? false : (seen[item] = true);
-    });
-}
