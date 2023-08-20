@@ -38,140 +38,340 @@
         a {
             color: rgb(0, 132, 255);
         }
+
+        dialog {
+            background-color: rgb(43, 43, 43);
+            border: black 5px solid;
+            border-radius: 10px;
+        }
+
+        table,
+        tr,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        tr:hover {
+            background-color: rgb(117, 117, 117);
+        }
+
+        td:hover {
+            background-color: rgb(189, 189, 189);
+        }
     </style>
     <!-- JavaScript -->
     <script>//Define some global scope variables
         const items = [
-            { "name": "Rubbish", "wiki": "https://rainworld.miraheze.org/wiki/Rubbish" },
-            { "name": "Flashbang", "wiki": "https://rainworld.miraheze.org/wiki/Flashbang" },
-            { "name": "Lantern", "wiki": "https://rainworld.miraheze.org/wiki/Lantern" },
-            { "name": "Vulture Mask", "wiki": "https://rainworld.miraheze.org/wiki/Vulture_Mask" },
-            { "name": "Pearl", "wiki": "https://rainworld.miraheze.org/wiki/Pearl" },
-            { "name": "Spore Puff", "wiki": "https://rainworld.miraheze.org/wiki/Spore_Puff" },
-            { "name": "Beehive", "wiki": "https://rainworld.miraheze.org/wiki/Beehive" },
-            { "name": "Blue Fruit", "wiki": "https://rainworld.miraheze.org/wiki/Blue_Fruit" },
-            { "name": "Neuron Fly", "wiki": "https://rainworld.miraheze.org/wiki/Neuron_Fly" },
-            { "name": "Overseer Eye", "wiki": "https://rainworld.miraheze.org/wiki/Overseer_Eye" },
-            { "name": "Bubble Fruit", "wiki": "https://rainworld.miraheze.org/wiki/Bubble_Fruit" },
-            { "name": "Jellyfish", "wiki": "https://rainworld.miraheze.org/wiki/Jellyfish" },
-            { "name": "Lilypuck", "wiki": "https://rainworld.miraheze.org/wiki/Lilypuck" },
-            { "name": "Karma Flower", "wiki": "https://rainworld.miraheze.org/wiki/Karma_Flower" },
-            { "name": "Grenade", "wiki": "https://rainworld.miraheze.org/wiki/Grenade" },
-            { "name": "Mushroom", "wiki": "https://rainworld.miraheze.org/wiki/Mushroom" },
-            { "name": "Cherrybomb", "wiki": "https://rainworld.miraheze.org/wiki/Cherrybomb" },
-            { "name": "Slime Mold", "wiki": "https://rainworld.miraheze.org/wiki/Slime_Mold" },
-            { "name": "Batnip", "wiki": "https://rainworld.miraheze.org/wiki/Batnip" },
-            { "name": "Eggbug Egg", "wiki": "https://rainworld.miraheze.org/wiki/Eggbug_Egg" },
-            { "name": "Noodlefly Egg", "wiki": "https://rainworld.miraheze.org/wiki/Noodlefly_Egg" },
-            { "name": "Batfly", "wiki": "https://rainworld.miraheze.org/wiki/Batfly" },
-            { "name": "Bubbleweed", "wiki": "https://rainworld.miraheze.org/wiki/Bubbleweed" },
-            { "name": "Singularity Bomb", "wiki": "https://rainworld.miraheze.org/wiki/Singularity_Bomb" },
-            { "name": "Fire Egg", "wiki": "https://rainworld.miraheze.org/wiki/Fire_Egg" },
-            { "name": "Seed", "wiki": "https://rainworld.miraheze.org/wiki/Seed" },
-            { "name": "Gooieduck", "wiki": "https://rainworld.miraheze.org/wiki/Gooieduck" },
-            { "name": "Glow Weed", "wiki": "https://rainworld.miraheze.org/wiki/Glow_Weed" },
-            { "name": "Dandelion Peach", "wiki": "https://rainworld.miraheze.org/wiki/Dandelion_Peach" },
-            { "name": "Infant Centipede", "wiki": "https://rainworld.miraheze.org/wiki/Infant_Centipede" },
-            { "name": "Vulture Grub", "wiki": "https://rainworld.miraheze.org/wiki/Vulture_Grub" },
-            { "name": "Noodlefly", "wiki": "https://rainworld.miraheze.org/wiki/Noodlefly" },
-            { "name": "Hazer", "wiki": "https://rainworld.miraheze.org/wiki/Hazer" }];
+            { "name": "Rubbish", "wiki": "https://rainworld.miraheze.org/wiki/Rubbish", "alias": ["Stone", "Brick"] },
+            { "name": "Vulture Mask", "wiki": "https://rainworld.miraheze.org/wiki/Vulture_Mask", "alias": [] },
+            { "name": "Pearl", "wiki": "https://rainworld.miraheze.org/wiki/Pearl", "alias": [] },
+            { "name": "Spore Puff", "wiki": "https://rainworld.miraheze.org/wiki/Spore_Puff", "alias": [] },
+            { "name": "Beehive", "wiki": "https://rainworld.miraheze.org/wiki/Beehive", "alias": [] },
+            { "name": "Lantern", "wiki": "https://rainworld.miraheze.org/wiki/Lantern", "alias": [] },
+            { "name": "Flashbang", "wiki": "https://rainworld.miraheze.org/wiki/Flashbang", "alias": [] },
+            { "name": "Mushroom", "wiki": "https://rainworld.miraheze.org/wiki/Mushroom", "alias": [] },
+            { "name": "Cherrybomb", "wiki": "https://rainworld.miraheze.org/wiki/Cherrybomb", "alias": [] },
+            { "name": "Grenade", "wiki": "https://rainworld.miraheze.org/wiki/Grenade", "alias": [] },
+            { "name": "Batnip", "wiki": "https://rainworld.miraheze.org/wiki/Batnip", "alias": [], "icon": "https://static.miraheze.org/rainworldwiki/1/15/Batnip_icon.png" },
+            { "name": "Bubble Weed", "wiki": "https://rainworld.miraheze.org/wiki/Bubble_Weed", "alias": [] },
+            { "name": "Noodlefly Egg", "wiki": "https://rainworld.miraheze.org/wiki/Noodlefly_Egg", "alias": [] },
+            { "name": "Batfly", "wiki": "https://rainworld.miraheze.org/wiki/Batfly", "alias": [] },
+            { "name": "Karma Flower", "wiki": "https://rainworld.miraheze.org/wiki/Karma_Flower", "alias": [] },
+            { "name": "Singularity Bomb", "wiki": "https://rainworld.miraheze.org/wiki/Singularity_Bomb", "alias": [] },
+            { "name": "Fire Egg", "wiki": "https://rainworld.miraheze.org/wiki/Fire_Egg", "alias": [] },
+            { "name": "Overseer Eye", "wiki": "https://rainworld.miraheze.org/wiki/Overseer_Eye", "alias": [] },
+            { "name": "Neuron Fly", "wiki": "https://rainworld.miraheze.org/wiki/Neuron_Fly", "alias": [] },
+            { "name": "Blue Fruit", "wiki": "https://rainworld.miraheze.org/wiki/Blue_Fruit", "alias": [] },
+            { "name": "Bubble Fruit", "wiki": "https://rainworld.miraheze.org/wiki/Bubble_Fruit", "alias": [] },
+            { "name": "Jellyfish", "wiki": "https://rainworld.miraheze.org/wiki/Jellyfish", "alias": [] },
+            { "name": "Slime Mold", "wiki": "https://rainworld.miraheze.org/wiki/Slime_Mold", "alias": [] },
+            { "name": "Lilypuck", "wiki": "https://rainworld.miraheze.org/wiki/Lilypuck", "alias": [] },
+            { "name": "Eggbug Egg", "wiki": "https://rainworld.miraheze.org/wiki/Eggbug_Egg", "alias": [] },
+            { "name": "Seed", "wiki": "https://rainworld.miraheze.org/wiki/Seed", "alias": [] },
+            { "name": "Gooieduck", "wiki": "https://rainworld.miraheze.org/wiki/Gooieduck", "alias": [] },
+            { "name": "Glow Weed", "wiki": "https://rainworld.miraheze.org/wiki/Glow_Weed", "alias": [] },
+            { "name": "Dandelion Peach", "wiki": "https://rainworld.miraheze.org/wiki/Dandelion_Peach", "alias": [] },
+            { "name": "Infant Centipede", "wiki": "https://rainworld.miraheze.org/wiki/Infant_Centipede", "alias": [] },
+            { "name": "Vulture Grub", "wiki": "https://rainworld.miraheze.org/wiki/Vulture_Grub", "alias": [] },
+            { "name": "Infant Noodlefly", "wiki": "https://rainworld.miraheze.org/wiki/Infant_Noodlefly", "alias": [] },
+            { "name": "Hazer", "wiki": "https://rainworld.miraheze.org/wiki/Hazer", "alias": [] },
+            { "name": "Sporepuff", "wiki": "https://rainworld.miraheze.org/wiki/Sporepuff", "alias": [] },
+            { "name": "Snail", "wiki": "https://rainworld.miraheze.org/wiki/Snail", "alias": [] },
+            { "name": "Grappling Worm", "wiki": "https://rainworld.miraheze.org/wiki/Grappling_Worm", "alias": [] }];
+
         const crafts = [
-            { a: 'rubbish', b: 'flashbang', out: 'lantern' },
-            { a: 'rubbish', b: 'vulture mask', out: 'pearl' },
-            { a: 'rubbish', b: 'spore puff', out: 'beehive' },
-            { a: 'rubbish', b: 'blue fruit', out: 'flashbang' },
-            { a: 'rubbish', b: 'neuron fly', out: 'overseer eye' },
-            { a: 'rubbish', b: 'bubble fruit', out: 'jellyfish' },
-            { a: 'rubbish', b: 'jellyfish', out: 'lilypuck' },
-            { a: 'rubbish', b: 'lantern', out: 'flashbang' },
-            { a: 'rubbish', b: 'karma flower', out: 'grenade' },
-            { a: 'rubbish', b: 'mushroom', out: 'spore puff' },
-            { a: 'rubbish', b: 'cherrybomb', out: 'grenade' },
-            { a: 'rubbish', b: 'slime mold', out: 'lantern' },
-            { a: 'rubbish', b: 'batnip', out: 'cherrybomb' },
-            { a: 'rubbish', b: 'grenade', out: 'pearl' },
-            { a: 'rubbish', b: 'beehive', out: 'spore puff' },
-            { a: 'rubbish', b: 'eggbug egg', out: 'noodlefly egg' },
-            { a: 'rubbish', b: 'noodlefly egg', out: 'batfly' },
-            { a: 'rubbish', b: 'bubbleweed', out: 'cherrybomb' },
-            { a: 'rubbish', b: 'overseer eye', out: 'pearl' },
-            { a: 'rubbish', b: 'singularity bomb', out: 'fire egg' },
-            { a: 'rubbish', b: 'fire egg', out: 'grenade' },
-            { a: 'rubbish', b: 'seed', out: 'batfly' },
-            { a: 'rubbish', b: 'gooieduck', out: 'beehive' },
-            { a: 'rubbish', b: 'lilypuck', out: 'lantern' },
-            { a: 'rubbish', b: 'glow weed', out: 'lantern' },
-            { a: 'rubbish', b: 'dandelion peach', out: 'spore puff' },
-            { a: 'rubbish', b: 'batfly', out: 'mushroom' },
-            { a: 'rubbish', b: 'infant centipede', out: 'beehive' },
-            { a: 'rubbish', b: 'vulture grub', out: 'lantern' },
-            { a: 'rubbish', b: 'noodlefly', out: 'spore puff' },
-            { a: 'rubbish', b: 'hazer', out: 'lilypuck' },
-            { a: 'flashbang', b: 'vulture mask', out: 'pearl' },
-            { a: 'flashbang', b: 'spore puff', out: 'mushroom' },
-            { a: 'flashbang', b: 'blue fruit', out: 'slime mold' },
-            { a: 'flashbang', b: 'neuron fly', out: 'overseer eye' },
-            { a: 'flashbang', b: 'bubble fruit', out: 'jellyfish' },
-            { a: 'flashbang', b: 'jellyfish', out: 'lilypuck' },
-            { a: 'flashbang', b: 'lantern', out: 'glow weed' },
-            { a: 'flashbang', b: 'karma flower', out: 'lantern' },
-            { a: 'flashbang', b: 'mushroom', out: 'spore puff' },
-            { a: 'flashbang', b: 'cherrybomb', out: 'lantern' },
-            { a: 'flashbang', b: 'slime mold', out: 'lantern' },
-            { a: 'flashbang', b: 'batnip', out: 'cherrybomb' },
-            { a: 'flashbang', b: 'grenade', out: 'lantern' },
-            { a: 'flashbang', b: 'beehive', out: 'cherrybomb' },
-            { a: 'flashbang', b: 'eggbug egg', out: 'beehive' },
-            { a: 'flashbang', b: 'noodlefly egg', out: 'vulture grub' },
-            { a: 'flashbang', b: 'bubbleweed', out: 'cherrybomb' },
-            { a: 'flashbang', b: 'overseer eye', out: 'pearl' },
-            { a: 'flashbang', b: 'singularity bomb', out: 'fire egg' },
-            { a: 'flashbang', b: 'fire egg', out: 'grenade' },
-            { a: 'flashbang', b: 'seed', out: 'vulture grub' },
-            { a: 'flashbang', b: 'gooieduck', out: 'lantern' },
-            { a: 'flashbang', b: 'lilypuck', out: 'lantern' },
-            { a: 'flashbang', b: 'glow weed', out: 'lantern' },
-            { a: 'flashbang', b: 'dandelion peach', out: 'beehive' },
-            { a: 'flashbang', b: 'batfly', out: 'mushroom' },
-            { a: 'flashbang', b: 'infant centipede', out: 'beehive' },
-            { a: 'flashbang', b: 'vulture grub', out: 'lantern' },
-            { a: 'flashbang', b: 'noodlefly', out: 'spore puff' },
-            { a: 'flashbang', b: 'hazer', out: 'glow weed' },
-            { a: 'vulture mask', b: 'spore puff', out: 'pearl' },
-            { a: 'vulture mask', b: 'blue fruit', out: 'pearl' },
-            { a: 'vulture mask', b: 'neuron fly', out: 'overseer eye' },
-            { a: 'vulture mask', b: 'bubble fruit', out: 'pearl' },
-            { a: 'vulture mask', b: 'jellyfish', out: 'pearl' },
-            { a: 'vulture mask', b: 'lantern', out: 'pearl' },
-            { a: 'vulture mask', b: 'karma flower', out: 'pearl' },
-            { a: 'vulture mask', b: 'mushroom', out: 'pearl' },
-            { a: 'vulture mask', b: 'cherrybomb', out: 'pearl' },
-            { a: 'vulture mask', b: 'slime mold', out: 'pearl' },
-            { a: 'vulture mask', b: 'batnip', out: 'pearl' },
-            { a: 'vulture mask', b: 'grenade', out: 'pearl' },
-            { a: 'vulture mask', b: 'beehive', out: 'pearl' },
-            { a: 'vulture mask', b: 'eggbug egg', out: 'pearl' },
-            { a: 'vulture mask', b: 'noodlefly egg', out: 'vulture grub' },
-            { a: 'vulture mask', b: 'bubbleweed', out: 'pearl' },
-            { a: 'vulture mask', b: 'overseer eye', out: 'pearl' },
-            { a: 'vulture mask', b: 'singularity bomb', out: 'fire egg' },
-            { a: 'vulture mask', b: 'fire egg', out: 'grenade' },
-            { a: 'vulture mask', b: 'seed', out: 'vulture grub' },
-            { a: 'vulture mask', b: 'gooieduck', out: 'pearl' },
-            { a: 'vulture mask', b: 'lilypuck', out: 'pearl' },
-            { a: 'vulture mask', b: 'glow weed', out: 'pearl' },
-            { a: 'vulture mask', b: 'dandelion peach', out: 'pearl' },
-            { a: 'vulture mask', b: 'batfly', out: 'seed' },
-            { a: 'vulture mask', b: 'infant centipede', out: 'seed' },
-            { a: 'vulture mask', b: 'vulture grub', out: 'seed' },
-            { a: 'vulture mask', b: 'noodlefly', out: 'seed' },
-            { a: 'vulture mask', b: 'hazer', out: 'seed' },
-        ];
+            { "a": "Rubbish", "b": "Vulture Mask", "out": "Pearl" },
+            { "a": "Rubbish", "b": "Spore Puff", "out": "Beehive" },
+            { "a": "Rubbish", "b": "Lantern", "out": "Flashbang" },
+            { "a": "Rubbish", "b": "Mushroom", "out": "Spore Puff" },
+            { "a": "Rubbish", "b": "Cherrybomb", "out": "Grenade" },
+            { "a": "Rubbish", "b": "Batnip", "out": "Cherrybomb" },
+            { "a": "Rubbish", "b": "Grenade", "out": "Pearl" },
+            { "a": "Rubbish", "b": "Beehive", "out": "Spore Puff" },
+            { "a": "Rubbish", "b": "Bubble Weed", "out": "Cherrybomb" },
+            { "a": "Rubbish", "b": "Noodlefly Egg", "out": "Batfly" },
+            { "a": "Rubbish", "b": "Karma Flower", "out": "Grenade" },
+            { "a": "Rubbish", "b": "Singularity Bomb", "out": "Fire Egg" },
+            { "a": "Rubbish", "b": "Overseer Eye", "out": "Pearl" },
+            { "a": "Rubbish", "b": "Neuron Fly", "out": "Overseer Eye" },
+            { "a": "Rubbish", "b": "Fire Egg", "out": "Grenade" },
+            { "a": "Rubbish", "b": "Blue Fruit", "out": "Flashbang" },
+            { "a": "Rubbish", "b": "Bubble Fruit", "out": "Jellyfish" },
+            { "a": "Rubbish", "b": "Slime Mold", "out": "Lantern" },
+            { "a": "Rubbish", "b": "Jellyfish", "out": "Lilypuck" },
+            { "a": "Rubbish", "b": "Eggbug Egg", "out": "Noodlefly Egg" },
+            { "a": "Rubbish", "b": "Seed", "out": "Batfly" },
+            { "a": "Rubbish", "b": "Gooieduck", "out": "Beehive" },
+            { "a": "Rubbish", "b": "Lilypuck", "out": "Lantern" },
+            { "a": "Rubbish", "b": "Glow Weed", "out": "Lantern" },
+            { "a": "Rubbish", "b": "Dandelion Peach", "out": "Spore Puff" },
+            { "a": "Rubbish", "b": "Batfly", "out": "Mushroom" },
+            { "a": "Rubbish", "b": "Infant Centipede", "out": "Beehive" },
+            { "a": "Rubbish", "b": "Vulture Grub", "out": "Cherrybomb" },
+            { "a": "Rubbish", "b": "Infant Noodlefly", "out": "Spore Puff" },
+            { "a": "Rubbish", "b": "Hazer", "out": "Lilypuck" },
+            { "a": "Flashbang", "b": "Vulture Mask", "out": "Pearl" },
+            { "a": "Flashbang", "b": "Spore Puff", "out": "Mushroom" },
+            { "a": "Flashbang", "b": "Lantern", "out": "Glow Weed" },
+            { "a": "Flashbang", "b": "Mushroom", "out": "Spore Puff" },
+            { "a": "Flashbang", "b": "Cherrybomb", "out": "Lantern" },
+            { "a": "Flashbang", "b": "Batnip", "out": "Cherrybomb" },
+            { "a": "Flashbang", "b": "Grenade", "out": "Lantern" },
+            { "a": "Flashbang", "b": "Beehive", "out": "Cherrybomb" },
+            { "a": "Flashbang", "b": "Bubble Weed", "out": "Cherrybomb" },
+            { "a": "Flashbang", "b": "Noodlefly Egg", "out": "Vulture Grub" },
+            { "a": "Flashbang", "b": "Karma Flower", "out": "Lantern" },
+            { "a": "Flashbang", "b": "Singularity Bomb", "out": "Fire Egg" },
+            { "a": "Flashbang", "b": "Overseer Eye", "out": "Pearl" },
+            { "a": "Flashbang", "b": "Neuron Fly", "out": "Overseer Eye" },
+            { "a": "Flashbang", "b": "Fire Egg", "out": "Grenade" },
+            { "a": "Flashbang", "b": "Blue Fruit", "out": "Slime Mold" },
+            { "a": "Flashbang", "b": "Bubble Fruit", "out": "Jellyfish" },
+            { "a": "Flashbang", "b": "Slime Mold", "out": "Lantern" },
+            { "a": "Flashbang", "b": "Jellyfish", "out": "Lilypuck" },
+            { "a": "Flashbang", "b": "Eggbug Egg", "out": "Beehive" },
+            { "a": "Flashbang", "b": "Seed", "out": "Vulture Grub" },
+            { "a": "Flashbang", "b": "Gooieduck", "out": "Lantern" },
+            { "a": "Flashbang", "b": "Lilypuck", "out": "Lantern" },
+            { "a": "Flashbang", "b": "Glow Weed", "out": "Lantern" },
+            { "a": "Flashbang", "b": "Dandelion Peach", "out": "Beehive" },
+            { "a": "Flashbang", "b": "Batfly", "out": "Mushroom" },
+            { "a": "Flashbang", "b": "Infant Centipede", "out": "Beehive" },
+            { "a": "Flashbang", "b": "Vulture Grub", "out": "Lantern" },
+            { "a": "Flashbang", "b": "Infant Noodlefly", "out": "Spore Puff" },
+            { "a": "Flashbang", "b": "Hazer", "out": "Glow Weed" },
+            { "a": "Vulture Mask", "b": "Spore Puff", "out": "Pearl" },
+            { "a": "Vulture Mask", "b": "Lantern", "out": "Pearl" },
+            { "a": "Vulture Mask", "b": "Mushroom", "out": "Pearl" },
+            { "a": "Vulture Mask", "b": "Cherrybomb", "out": "Pearl" },
+            { "a": "Vulture Mask", "b": "Batnip", "out": "Pearl" },
+            { "a": "Vulture Mask", "b": "Grenade", "out": "Pearl" },
+            { "a": "Vulture Mask", "b": "Beehive", "out": "Pearl" },
+            { "a": "Vulture Mask", "b": "Bubble Weed", "out": "Pearl" },
+            { "a": "Vulture Mask", "b": "Noodlefly Egg", "out": "Vulture Grub" },
+            { "a": "Vulture Mask", "b": "Karma Flower", "out": "Pearl" },
+            { "a": "Vulture Mask", "b": "Singularity Bomb", "out": "Fire Egg" },
+            { "a": "Vulture Mask", "b": "Overseer Eye", "out": "Pearl" },
+            { "a": "Vulture Mask", "b": "Neuron Fly", "out": "Overseer Eye" },
+            { "a": "Vulture Mask", "b": "Fire Egg", "out": "Grenade" },
+            { "a": "Vulture Mask", "b": "Blue Fruit", "out": "Pearl" },
+            { "a": "Vulture Mask", "b": "Bubble Fruit", "out": "Pearl" },
+            { "a": "Vulture Mask", "b": "Slime Mold", "out": "Pearl" },
+            { "a": "Vulture Mask", "b": "Jellyfish", "out": "Pearl" },
+            { "a": "Vulture Mask", "b": "Eggbug Egg", "out": "Pearl" },
+            { "a": "Vulture Mask", "b": "Seed", "out": "Vulture Grub" },
+            { "a": "Vulture Mask", "b": "Gooieduck", "out": "Pearl" },
+            { "a": "Vulture Mask", "b": "Lilypuck", "out": "Pearl" },
+            { "a": "Vulture Mask", "b": "Glow Weed", "out": "Pearl" },
+            { "a": "Vulture Mask", "b": "Dandelion Peach", "out": "Pearl" },
+            { "a": "Vulture Mask", "b": "Batfly", "out": "Seed" },
+            { "a": "Vulture Mask", "b": "Infant Centipede", "out": "Seed" },
+            { "a": "Vulture Mask", "b": "Vulture Grub", "out": "Seed" },
+            { "a": "Vulture Mask", "b": "Infant Noodlefly", "out": "Seed" },
+            { "a": "Vulture Mask", "b": "Hazer", "out": "Seed" },
+            { "a": "Spore Puff", "b": "Lantern", "out": "Mushroom" },
+            { "a": "Spore Puff", "b": "Mushroom", "out": "Gooieduck" },
+            { "a": "Spore Puff", "b": "Cherrybomb", "out": "Grenade" },
+            { "a": "Spore Puff", "b": "Batnip", "out": "Mushroom" },
+            { "a": "Spore Puff", "b": "Grenade", "out": "Gooieduck" },
+            { "a": "Spore Puff", "b": "Beehive", "out": "Gooieduck" },
+            { "a": "Spore Puff", "b": "Bubble Weed", "out": "Mushroom" },
+            { "a": "Spore Puff", "b": "Noodlefly Egg", "out": "Infant Noodlefly" },
+            { "a": "Spore Puff", "b": "Karma Flower", "out": "Noodlefly Egg" },
+            { "a": "Spore Puff", "b": "Singularity Bomb", "out": "Fire Egg" },
+            { "a": "Spore Puff", "b": "Overseer Eye", "out": "Pearl" },
+            { "a": "Spore Puff", "b": "Neuron Fly", "out": "Overseer Eye" },
+            { "a": "Spore Puff", "b": "Fire Egg", "out": "Grenade" },
+            { "a": "Spore Puff", "b": "Blue Fruit", "out": "Mushroom" },
+            { "a": "Spore Puff", "b": "Bubble Fruit", "out": "Gooieduck" },
+            { "a": "Spore Puff", "b": "Slime Mold", "out": "Mushroom" },
+            { "a": "Spore Puff", "b": "Jellyfish", "out": "Gooieduck" },
+            { "a": "Spore Puff", "b": "Eggbug Egg", "out": "Gooieduck" },
+            { "a": "Spore Puff", "b": "Seed", "out": "Infant Centipede" },
+            { "a": "Spore Puff", "b": "Gooieduck", "out": "Mushroom" },
+            { "a": "Spore Puff", "b": "Lilypuck", "out": "Mushroom" },
+            { "a": "Spore Puff", "b": "Glow Weed", "out": "Gooieduck" },
+            { "a": "Spore Puff", "b": "Dandelion Peach", "out": "Gooieduck" },
+            { "a": "Spore Puff", "b": "Batfly", "out": "Mushroom" },
+            { "a": "Spore Puff", "b": "Infant Centipede", "out": "Beehive" },
+            { "a": "Spore Puff", "b": "Vulture Grub", "out": "Cherrybomb" },
+            { "a": "Spore Puff", "b": "Infant Noodlefly", "out": "Mushroom" },
+            { "a": "Spore Puff", "b": "Hazer", "out": "Bubble Weed" },
+            { "a": "Lantern", "b": "Mushroom", "out": "Sporepuff" },
+            { "a": "Lantern", "b": "Cherrybomb", "out": "Grenade" },
+            { "a": "Lantern", "b": "Batnip", "out": "Cherrybomb" },
+            { "a": "Lantern", "b": "Grenade", "out": "Pearl" },
+            { "a": "Lantern", "b": "Beehive", "out": "Cherrybomb" },
+            { "a": "Lantern", "b": "Bubble Weed", "out": "Glow Weed" },
+            { "a": "Lantern", "b": "Noodlefly Egg", "out": "Vulture Grub" },
+            { "a": "Lantern", "b": "Karma Flower", "out": "Pearl" },
+            { "a": "Lantern", "b": "Singularity Bomb", "out": "Fire Egg" },
+            { "a": "Lantern", "b": "Overseer Eye", "out": "Pearl" },
+            { "a": "Lantern", "b": "Neuron Fly", "out": "Overseer Eye" },
+            { "a": "Lantern", "b": "Fire Egg", "out": "Grenade" },
+            { "a": "Lantern", "b": "Blue Fruit", "out": "Flashbang" },
+            { "a": "Lantern", "b": "Bubble Fruit", "out": "Flashbang" },
+            { "a": "Lantern", "b": "Slime Mold", "out": "Mushroom" },
+            { "a": "Lantern", "b": "Jellyfish", "out": "Glow Weed" },
+            { "a": "Lantern", "b": "Eggbug Egg", "out": "Noodlefly Egg" },
+            { "a": "Lantern", "b": "Seed", "out": "Vulture Grub" },
+            { "a": "Lantern", "b": "Gooieduck", "out": "Lilypuck" },
+            { "a": "Lantern", "b": "Lilypuck", "out": "Glow Weed" },
+            { "a": "Lantern", "b": "Glow Weed", "out": "Lilypuck" },
+            { "a": "Lantern", "b": "Dandelion Peach", "out": "Glow Weed" },
+            { "a": "Lantern", "b": "Batfly", "out": "Mushroom" },
+            { "a": "Lantern", "b": "Infant Centipede", "out": "Cherrybomb" },
+            { "a": "Lantern", "b": "Vulture Grub", "out": "Pearl" },
+            { "a": "Lantern", "b": "Infant Noodlefly", "out": "Noodlefly Egg" },
+            { "a": "Lantern", "b": "Hazer", "out": "Snail" },
+            { "a": "Mushroom", "b": "Cherrybomb", "out": "Infant Centipede" },
+            { "a": "Mushroom", "b": "Batnip", "out": "Batfly" },
+            { "a": "Mushroom", "b": "Grenade", "out": "Beehive" },
+            { "a": "Mushroom", "b": "Beehive", "out": "Gooieduck" },
+            { "a": "Mushroom", "b": "Bubble Weed", "out": "Hazer" },
+            { "a": "Mushroom", "b": "Noodlefly Egg", "out": "Infant Centipede" },
+            { "a": "Mushroom", "b": "Karma Flower", "out": "Noodlefly Egg" },
+            { "a": "Mushroom", "b": "Singularity Bomb", "out": "Infant Noodlefly" },
+            { "a": "Mushroom", "b": "Overseer Eye", "out": "Pearl" },
+            { "a": "Mushroom", "b": "Neuron Fly", "out": "Overseer Eye" },
+            { "a": "Mushroom", "b": "Fire Egg", "out": "Grenade" },
+            { "a": "Mushroom", "b": "Blue Fruit", "out": "Gooieduck" },
+            { "a": "Mushroom", "b": "Bubble Fruit", "out": "Noodlefly Egg" },
+            { "a": "Mushroom", "b": "Slime Mold", "out": "Infant Noodlefly" },
+            { "a": "Mushroom", "b": "Jellyfish", "out": "Gooieduck" },
+            { "a": "Mushroom", "b": "Eggbug Egg", "out": "Gooieduck" },
+            { "a": "Mushroom", "b": "Seed", "out": "Infant Centipede" },
+            { "a": "Mushroom", "b": "Gooieduck", "out": "Sporepuff" },
+            { "a": "Mushroom", "b": "Lilypuck", "out": "Gooieduck" },
+            { "a": "Mushroom", "b": "Glow Weed", "out": "Lilypuck" },
+            { "a": "Mushroom", "b": "Dandelion Peach", "out": "Glow Weed" },
+            { "a": "Mushroom", "b": "Batfly", "out": "Mushroom" },
+            { "a": "Mushroom", "b": "Infant Centipede", "out": "Cherrybomb" },
+            { "a": "Mushroom", "b": "Vulture Grub", "out": "Pearl" },
+            { "a": "Mushroom", "b": "Infant Noodlefly", "out": "Sporepuff" },
+            { "a": "Mushroom", "b": "Hazer", "out": "Bubble Weed" },
+            { "a": "Cherrybomb", "b": "Batnip", "out": "Beehive" },
+            { "a": "Cherrybomb", "b": "Grenade", "out": "Lantern" },
+            { "a": "Cherrybomb", "b": "Beehive", "out": "Grenade" },
+            { "a": "Cherrybomb", "b": "Bubble Weed", "out": "Snail" },
+            { "a": "Cherrybomb", "b": "Noodlefly Egg", "out": "Infant Centipede" },
+            { "a": "Cherrybomb", "b": "Karma Flower", "out": "Grenade" },
+            { "a": "Cherrybomb", "b": "Singularity Bomb", "out": "Fire Egg" },
+            { "a": "Cherrybomb", "b": "Overseer Eye", "out": "Pearl" },
+            { "a": "Cherrybomb", "b": "Neuron Fly", "out": "Overseer Eye" },
+            { "a": "Cherrybomb", "b": "Fire Egg", "out": "Grenade" },
+            { "a": "Cherrybomb", "b": "Blue Fruit", "out": "Beehive" },
+            { "a": "Cherrybomb", "b": "Bubble Fruit", "out": "Grenade" },
+            { "a": "Cherrybomb", "b": "Slime Mold", "out": "Lantern" },
+            { "a": "Cherrybomb", "b": "Jellyfish", "out": "Batnip" },
+            { "a": "Cherrybomb", "b": "Eggbug Egg", "out": "Beehive" },
+            { "a": "Cherrybomb", "b": "Seed", "out": "Infant Centipede" },
+            { "a": "Cherrybomb", "b": "Gooieduck", "out": "Beehive" },
+            { "a": "Cherrybomb", "b": "Lilypuck", "out": "Beehive" },
+            { "a": "Cherrybomb", "b": "Glow Weed", "out": "Beehive" },
+            { "a": "Cherrybomb", "b": "Dandelion Peach", "out": "Beehive" },
+            { "a": "Cherrybomb", "b": "Batfly", "out": "Beehive" },
+            { "a": "Cherrybomb", "b": "Infant Centipede", "out": "Beehive" },
+            { "a": "Cherrybomb", "b": "Vulture Grub", "out": "Beehive" },
+            { "a": "Cherrybomb", "b": "Infant Noodlefly", "out": "Beehive" },
+            { "a": "Cherrybomb", "b": "Hazer", "out": "Jellyfish" },
+            { "a": "Batnip", "b": "Grenade", "out": "Cherrybomb" },
+            { "a": "Batnip", "b": "Beehive", "out": "Sporepuff" },
+            { "a": "Batnip", "b": "Bubble Weed", "out": "Mushroom" },
+            { "a": "Batnip", "b": "Noodlefly Egg", "out": "Batfly" },
+            { "a": "Batnip", "b": "Karma Flower", "out": "Seed" },
+            { "a": "Batnip", "b": "Singularity Bomb", "out": "Fire Egg" },
+            { "a": "Batnip", "b": "Overseer Eye", "out": "Pearl" },
+            { "a": "Batnip", "b": "Neuron Fly", "out": "Overseer Eye" },
+            { "a": "Batnip", "b": "Fire Egg", "out": "Grenade" },
+            { "a": "Batnip", "b": "Blue Fruit", "out": "Gooieduck" },
+            { "a": "Batnip", "b": "Bubble Fruit", "out": "Cherrybomb" },
+            { "a": "Batnip", "b": "Slime Mold", "out": "Cherrybomb" },
+            { "a": "Batnip", "b": "Jellyfish", "out": "Bubble Weed" },
+            { "a": "Batnip", "b": "Eggbug Egg", "out": "Gooieduck" },
+            { "a": "Batnip", "b": "Seed", "out": "Batfly" },
+            { "a": "Batnip", "b": "Gooieduck", "out": "Mushroom" },
+            { "a": "Batnip", "b": "Lilypuck", "out": "Hazer" },
+            { "a": "Batnip", "b": "Glow Weed", "out": "Infant Centipede" },
+            { "a": "Batnip", "b": "Dandelion Peach", "out": "Batfly" },
+            { "a": "Batnip", "b": "Batfly", "out": "Mushroom" },
+            { "a": "Batnip", "b": "Infant Centipede", "out": "Mushroom" },
+            { "a": "Batnip", "b": "Vulture Grub", "out": "Mushroom" },
+            { "a": "Batnip", "b": "Infant Noodlefly", "out": "Mushroom" },
+            { "a": "Batnip", "b": "Hazer", "out": "Bubble Weed" },
+            { "a": "Grenade", "b": "Beehive", "out": "Sporepuff" },
+            { "a": "Grenade", "b": "Bubble Weed", "out": "Sporepuff" },
+            { "a": "Grenade", "b": "Noodlefly Egg", "out": "Infant Centipede" },
+            { "a": "Grenade", "b": "Karma Flower", "out": "Fire Egg" },
+            { "a": "Grenade", "b": "Singularity Bomb", "out": "Fire Egg" },
+            { "a": "Grenade", "b": "Overseer Eye", "out": "Pearl" },
+            { "a": "Grenade", "b": "Neuron Fly", "out": "Overseer Eye" },
+            { "a": "Grenade", "b": "Fire Egg", "out": "Singularity Bomb" },
+            { "a": "Grenade", "b": "Blue Fruit", "out": "Cherrybomb" },
+            { "a": "Grenade", "b": "Bubble Fruit", "out": "Snail" },
+            { "a": "Grenade", "b": "Slime Mold", "out": "Lantern" },
+            { "a": "Grenade", "b": "Jellyfish", "out": "Snail" },
+            { "a": "Grenade", "b": "Eggbug Egg", "out": "Cherrybomb" },
+            { "a": "Grenade", "b": "Seed", "out": "Infant Centipede" },
+            { "a": "Grenade", "b": "Gooieduck", "out": "Sporepuff" },
+            { "a": "Grenade", "b": "Lilypuck", "out": "Beehive" },
+            { "a": "Grenade", "b": "Glow Weed", "out": "Lantern" },
+            { "a": "Grenade", "b": "Dandelion Peach", "out": "Sporepuff" },
+            { "a": "Grenade", "b": "Batfly", "out": "Cherrybomb" },
+            { "a": "Grenade", "b": "Infant Centipede", "out": "Cherrybomb" },
+            { "a": "Grenade", "b": "Vulture Grub", "out": "Cherrybomb" },
+            { "a": "Grenade", "b": "Infant Noodlefly", "out": "Sporepuff" },
+            { "a": "Grenade", "b": "Hazer", "out": "Flashbang" },
+            { "a": "Beehive", "b": "Bubble Weed", "out": "Sporepuff" },
+            { "a": "Beehive", "b": "Noodlefly Egg", "out": "Grappling Worm" },
+            { "a": "Beehive", "b": "Karma Flower", "out": "Grenade" },
+            { "a": "Beehive", "b": "Singularity Bomb", "out": "Fire Egg" },
+            { "a": "Beehive", "b": "Overseer Eye", "out": "Pearl" },
+            { "a": "Beehive", "b": "Neuron Fly", "out": "Overseer Eye" },
+            { "a": "Beehive", "b": "Fire Egg", "out": "Grenade" },
+            { "a": "Beehive", "b": "Blue Fruit", "out": "Mushroom" },
+            { "a": "Beehive", "b": "Bubble Fruit", "out": "Hazer" },
+            { "a": "Beehive", "b": "Slime Mold", "out": "Cherrybomb" },
+            { "a": "Beehive", "b": "Jellyfish", "out": "Hazer" },
+            { "a": "Beehive", "b": "Eggbug Egg", "out": "Sporepuff" },
+            { "a": "Beehive", "b": "Seed", "out": "Grappling Worm" },
+            { "a": "Beehive", "b": "Gooieduck", "out": "Sporepuff" },
+            { "a": "Beehive", "b": "Lilypuck", "out": "Jellyfish" },
+            { "a": "Beehive", "b": "Glow Weed", "out": "Jellyfish" },
+            { "a": "Beehive", "b": "Dandelion Peach", "out": "Mushroom" },
+            { "a": "Beehive", "b": "Batfly", "out": "Batnip" },
+            { "a": "Beehive", "b": "Infant Centipede", "out": "Grappling Worm" },
+            { "a": "Beehive", "b": "Vulture Grub", "out": "Flashbang" },
+            { "a": "Beehive", "b": "Infant Noodlefly", "out": "Sporepuff" },
+            { "a": "Beehive", "b": "Hazer", "out": "Jellyfish" },];
 
         var selItem = null
         var available = []
         var mode = "ItemInfo"
-
+    </script>
+    <script>
 
         function uniq(a) {
             var seen = {};
@@ -188,12 +388,26 @@
             });
             out = (uniq(out))
             out = out.map(e => e.split(" ").map(e => e.charAt(0).toUpperCase() + e.slice(1)))
-
             out.forEach(e => {
                 let tmp = (".col_" + e.join(""))
                 sheet.insertRule(tmp + "{}");
                 Object.defineProperty(RuleMap, e.join(" "), { value: getCssStyle(tmp) })
             });
+            out = out.map(e => e.join(" "))
+            let len = out.length
+            let d2d = []
+            for (let i = 0; i < len; i++) {
+                const eo = out[i];
+                let d1d = []
+                d1d.push("<td><img src='" + ((items.find(e => e.name == eo).icon) || ("")) + "'></td>")
+                out.forEach(ei => d1d.push("<td id='cell_" + ei + "_" + eo + "'>-</td>"))
+                d2d.push("<tr>" + d1d.join("") + "</tr>")
+            }
+            let d1d = "<tr><td>I</td>" + (out.map(e => "<td><img src='" + ((items.find(it => it.name == e).icon) || ("")) + "'</td>")).join("") + "</tr>"
+            d2d.splice(0, 0, d1d)
+            d2d = d2d.join("")
+            document.getElementById("CraftsTable").innerHTML = d2d
+
         }
         function getCssStyle(selector) {
             const len = rules.length;
@@ -207,7 +421,6 @@
         var RuleMap = {}
         const sheet = document.styleSheets[0];
         const rules = sheet.cssRules || sheet.rules;
-        setupTable()
     </script>
 
 
@@ -215,8 +428,17 @@
         //Handles input and search narrowing down
         function input(searched) {
             //filter items and list them in html
-            var filtered = items.filter(e => e.name.includes(searched))
-            listSearch("FilteredItems", filtered.map(e => e.name))
+            if (2 < searched.length) {
+                var filtered = items.filter(e => e.name.toLowerCase().startsWith(searched.toLowerCase()) || e.alias.find(a => a.toLowerCase().startsWith(searched.toLowerCase())))
+                filtered = filtered.map(e => e.name + (e.name.toLowerCase().startsWith(searched.toLowerCase()) ? "" :
+                    (" (" + e.alias.find(a => a.toLowerCase().startsWith(searched.toLowerCase())) + ")")))
+            } else {
+                var filtered = items.filter(e => e.name.toLowerCase().includes(searched.toLowerCase()) || e.alias.find(a => a.toLowerCase().includes(searched.toLowerCase())))
+                filtered = filtered.map(e => e.name + (e.name.toLowerCase().includes(searched.toLowerCase()) ? "" :
+                    (" (" + e.alias.find(a => a.toLowerCase().includes(searched.toLowerCase())) + ")")))
+            }
+            console.log(filtered);
+            listSearch("FilteredItems", filtered)
         };
 
         function clicked(item) {
@@ -236,7 +458,7 @@
             } else {
                 document.getElementById("selItemData").innerHTML =
                     "<h2>Selected item</h2><p id=\"Desc\"></p><div><div class='half'><h2>How to craft</h2><ul id=\"CraftFrom\"></ul></div><div class='half'><h2>Use it to craft</h2><ul id=\"CraftTo\"></ul></div></div>"
-                document.getElementById("Desc").innerHTML = ('<a href="' + (selItem.wiki || "") + '">' + selItem.name + '</a><img src="' + (selItem.img || "") + '">')
+                document.getElementById("Desc").innerHTML = ('<a href="' + (selItem.wiki || "") + '">' + selItem.name + '</a><img src="' + (selItem.icon || "") + '">')
                 filter()
                 //scroll it into wiew
                 document.getElementById("CraftFrom").scrollIntoView(true, { behavior: "smooth" });
@@ -324,7 +546,7 @@
     </script>
 </head>
 
-<body onload="input('')">
+<body onload="input(document.getElementById('ItemSearch').value);setupTable()">
     <h1>Gourmand Crafting Helper</h1>
     <input type="text" id="ItemSearch" placeholder="Item name.." style="background-color: rgb(43, 43, 43);color: #ddd;"
         oninput="input(this.value)" onload="input(this.value)">
@@ -333,14 +555,14 @@
     </button>
     <section class="main">
         <ul id="FilteredItems"></ul>
-        <dialog id="ItemTableM" style="height: 85%; width: 85%;">
+        <dialog id="ItemTableM" style="height: 85%; width: 85%; color: #ccc;">
             <h2 style="text-align: center;">Interactive crafts table</h2>
             <p style="text-align: center;">Work in progres</p>
-            <table></table>
+            <table id="CraftsTable" style="  margin-left: auto; margin-right: auto;"></table>
             <p style="text-align: center;">
-            <button onclick="modal('ItemTableM', false)">
-                <div style="padding: 1mm;">Close</div>
-            </button>
+                <button onclick="modal('ItemTableM', false)">
+                    <div style="padding: 1mm;">Close</div>
+                </button>
             </p>
         </dialog>
         <div id="selItemData"></div>
