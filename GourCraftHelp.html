@@ -399,14 +399,22 @@
             for (let i = 0; i < len; i++) {
                 const eo = out[i];
                 let d1d = []
-                d1d.push("<td><img src='" + ((items.find(e => e.name == eo).icon) || ("")) + "'></td>")
+                //d1d.push("<td><img src='" + ((items.find(e => e.name == eo).icon) || ("")) + "'></td>")
+                d1d.push("<td>"+ ((items.find(e => e.name == eo).name) || ("")) + "</td>")
                 out.forEach(ei => d1d.push("<td id='cell_" + ei + "_" + eo + "'>-</td>"))
                 d2d.push("<tr>" + d1d.join("") + "</tr>")
             }
-            let d1d = "<tr><td>I</td>" + (out.map(e => "<td><img src='" + ((items.find(it => it.name == e).icon) || ("")) + "'</td>")).join("") + "</tr>"
+            //let d1d = "<tr><td>I</td>" + (out.map(e => "<td><img src='" + ((items.find(it => it.name == e).icon) || ("")) + "'</td>")).join("") + "</tr>"
+            let d1d = "<tr><td>I</td>" + (out.map(e => "<td>" + ((items.find(it => it.name == e).name) || ("")) + "</td>")).join("") + "</tr>"
             d2d.splice(0, 0, d1d)
             d2d = d2d.join("")
             document.getElementById("CraftsTable").innerHTML = d2d
+            crafts.forEach(e => {
+                document.getElementById(`cell_${e.a}_${e.b}`).innerHTML = e.out
+                document.getElementById(`cell_${e.b}_${e.a}`).innerHTML = e.out
+            }
+            )
+
 
         }
         function getCssStyle(selector) {
@@ -430,12 +438,20 @@
             //filter items and list them in html
             if (searched.length < 3) {
                 var filtered = items.filter(e => e.name.toLowerCase().startsWith(searched.toLowerCase()) || e.alias.find(a => a.toLowerCase().startsWith(searched.toLowerCase())))
-                filtered = filtered.map(e => {return { name:e.name, write:( e.name + (e.name.toLowerCase().startsWith(searched.toLowerCase()) ? "" :
-                    (" (" + e.alias.find(a => a.toLowerCase().startsWith(searched.toLowerCase())) + ")")))}})
+                filtered = filtered.map(e => {
+                    return {
+                        name: e.name, write: (e.name + (e.name.toLowerCase().startsWith(searched.toLowerCase()) ? "" :
+                            (" (" + e.alias.find(a => a.toLowerCase().startsWith(searched.toLowerCase())) + ")")))
+                    }
+                })
             } else {
                 var filtered = items.filter(e => e.name.toLowerCase().includes(searched.toLowerCase()) || e.alias.find(a => a.toLowerCase().includes(searched.toLowerCase())))
-                filtered = filtered.map(e => {return { name:e.name, write:( e.name + (e.name.toLowerCase().includes(searched.toLowerCase()) ? "" :
-                    (" (" + e.alias.find(a => a.toLowerCase().startsWith(searched.toLowerCase())) + ")")))}})
+                filtered = filtered.map(e => {
+                    return {
+                        name: e.name, write: (e.name + (e.name.toLowerCase().includes(searched.toLowerCase()) ? "" :
+                            (" (" + e.alias.find(a => a.toLowerCase().startsWith(searched.toLowerCase())) + ")")))
+                    }
+                })
             }
             console.log(filtered);
             listSearch("FilteredItems", filtered)
