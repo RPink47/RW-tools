@@ -428,14 +428,14 @@
         //Handles input and search narrowing down
         function input(searched) {
             //filter items and list them in html
-            if (2 < searched.length) {
+            if (searched.length < 3) {
                 var filtered = items.filter(e => e.name.toLowerCase().startsWith(searched.toLowerCase()) || e.alias.find(a => a.toLowerCase().startsWith(searched.toLowerCase())))
-                filtered = filtered.map(e => e.name + (e.name.toLowerCase().startsWith(searched.toLowerCase()) ? "" :
-                    (" (" + e.alias.find(a => a.toLowerCase().startsWith(searched.toLowerCase())) + ")")))
+                filtered = filtered.map(e => {return { name:e.name, write:( e.name + (e.name.toLowerCase().startsWith(searched.toLowerCase()) ? "" :
+                    (" (" + e.alias.find(a => a.toLowerCase().startsWith(searched.toLowerCase())) + ")")))}})
             } else {
                 var filtered = items.filter(e => e.name.toLowerCase().includes(searched.toLowerCase()) || e.alias.find(a => a.toLowerCase().includes(searched.toLowerCase())))
-                filtered = filtered.map(e => e.name + (e.name.toLowerCase().includes(searched.toLowerCase()) ? "" :
-                    (" (" + e.alias.find(a => a.toLowerCase().includes(searched.toLowerCase())) + ")")))
+                filtered = filtered.map(e => {return { name:e.name, write:( e.name + (e.name.toLowerCase().includes(searched.toLowerCase()) ? "" :
+                    (" (" + e.alias.find(a => a.toLowerCase().startsWith(searched.toLowerCase())) + ")")))}})
             }
             console.log(filtered);
             listSearch("FilteredItems", filtered)
