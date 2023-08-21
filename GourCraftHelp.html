@@ -60,6 +60,10 @@
         td:hover {
             background-color: rgb(189, 189, 189);
         }
+
+        .border {
+            border: 2px solid black;
+        }
     </style>
     <!-- JavaScript -->
     <script>//Define some global scope variables
@@ -102,6 +106,7 @@
             { "name": "Grappling Worm", "wiki": "https://rainworld.miraheze.org/wiki/Grappling_Worm", "alias": ["Grapple Worm"] }];
 
         const crafts = [
+            { "a": "Rubbish", "b": "Flashbang", "out": "Lantern" },
             { "a": "Rubbish", "b": "Vulture Mask", "out": "Pearl" },
             { "a": "Rubbish", "b": "Spore Puff", "out": "Beehive" },
             { "a": "Rubbish", "b": "Lantern", "out": "Flashbang" },
@@ -384,6 +389,8 @@
             var out = []
             crafts.forEach(e => {
                 out.push(e.a)
+            });
+            crafts.forEach(e => {
                 out.push(e.b)
             });
             out = (uniq(out))
@@ -399,13 +406,13 @@
             for (let i = 0; i < len; i++) {
                 const eo = out[i];
                 let d1d = []
-                //d1d.push("<td><img src='" + ((items.find(e => e.name == eo).icon) || ("")) + "'></td>")
-                d1d.push("<td>"+ ((items.find(e => e.name == eo).name) || ("")) + "</td>")
+                //d1d.push("<td class='border'><img src='" + ((items.find(e => e.name == eo).icon) || ("")) + "'></td>")
+                d1d.push("<td class='border'>" + ((items.find(e => e.name == eo).name) || ("")) + "</td>")
                 out.forEach(ei => d1d.push("<td id='cell_" + ei + "_" + eo + "'>-</td>"))
                 d2d.push("<tr>" + d1d.join("") + "</tr>")
             }
-            //let d1d = "<tr><td>I</td>" + (out.map(e => "<td><img src='" + ((items.find(it => it.name == e).icon) || ("")) + "'</td>")).join("") + "</tr>"
-            let d1d = "<tr><td>I</td>" + (out.map(e => "<td>" + ((items.find(it => it.name == e).name) || ("")) + "</td>")).join("") + "</tr>"
+            //let d1d = "<tr><td>I</td>" + (out.map(e => "<td class='border'><img src='" + ((items.find(it => it.name == e).icon) || ("")) + "'</td>")).join("") + "</tr>"
+            let d1d = "<tr><td>I</td>" + (out.map(e => "<td class='border'>" + ((items.find(it => it.name == e).name) || ("")) + "</td>")).join("") + "</tr>"
             d2d.splice(0, 0, d1d)
             d2d = d2d.join("")
             document.getElementById("CraftsTable").innerHTML = d2d
