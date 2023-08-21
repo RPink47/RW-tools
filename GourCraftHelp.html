@@ -499,7 +499,7 @@
         //lists values for the search - includes onclick jumps
         function listSearch(ElId, value) {
             if (value.length > 0) {
-                document.getElementById(ElId).innerHTML = value.map(e => `<li><span class='clickable' onclick=\"clicked('${e}')\">${e}</span></li>`).join("")
+                document.getElementById(ElId).innerHTML = value.map(e => `<li><span class='clickable' onclick=\"clicked('${e.name}')\">${e.write}</span></li>`).join("")
             } else {
                 document.getElementById(ElId).innerHTML = ""
             }
