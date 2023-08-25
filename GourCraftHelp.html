@@ -408,7 +408,9 @@
                 let d1d = []
                 //d1d.push("<td class='border'><img src='" + ((items.find(e => e.name == eo).icon) || ("")) + "'></td>")
                 d1d.push("<td class='border'>" + ((items.find(e => e.name == eo).name) || ("")) + "</td>")
-                out.forEach(ei => d1d.push("<td id='cell_" + ei + "_" + eo + "'>-</td>"))
+                out.forEach(ei => d1d.push(
+                    "<td class='col_" + ei.replace(" ", "") + "' id='cell_" + ei + "_" + eo + "' onpointerenter='tableHower( true, \"" + ei + "\")' onpointerleave='tableHower( false, \"" + ei + "\")' >-</td>"
+                ))
                 d2d.push("<tr>" + d1d.join("") + "</tr>")
             }
             //let d1d = "<tr><td>I</td>" + (out.map(e => "<td class='border'><img src='" + ((items.find(it => it.name == e).icon) || ("")) + "'</td>")).join("") + "</tr>"
@@ -436,6 +438,9 @@
         var RuleMap = {}
         const sheet = document.styleSheets[0];
         const rules = sheet.cssRules || sheet.rules;
+        function tableHower(hilighte, css){
+
+        }
     </script>
 
 
@@ -460,7 +465,6 @@
                     }
                 })
             }
-            console.log(filtered);
             listSearch("FilteredItems", filtered)
         };
 
