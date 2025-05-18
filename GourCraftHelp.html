@@ -273,6 +273,7 @@
 
             searched(term){
                 // returns null if it doesn't match, and the html to display if does
+                var alias = null
                 if (term.length < 3) {
                     if (this.name.toLowerCase().startsWith(term.toLowerCase())) {
                         return this.display()
