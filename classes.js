@@ -18,8 +18,9 @@ class Item {
         Item.list.push(this)
     }
 
-    img(){
-        return `<span class='clickable' onclick='setSelItem("${this.name}")'><img src="${this.icon}"></span>`
+    img(link = true){
+        if (link) return `<span class='clickable' onclick='setSelItem("${this.name}")'><img src="${this.icon}"></span>`
+        else return `<span><img src="${this.icon}"></span>`
     }
 
     searched(term){
@@ -42,7 +43,7 @@ class Item {
                 return this.display(alias.toLowerCase())
             }
         }
-        return null
+        return false
     }
 
     display(text = null){
@@ -63,5 +64,20 @@ class Craft {
         this.b = b
         this.out = out
         Craft.list.push(this)
+    }
+
+    display(reverse = false){
+        let a, b
+        if (!reverse){
+            a = this.a
+            b = this.b
+        } else {
+            a = this.b
+            b = this.a
+        }
+        return (
+        `${a.display()} +
+        ${b.display()} =
+        ${this.out.display()}`)
     }
 }

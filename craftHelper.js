@@ -8,7 +8,7 @@ function setup() {
 // core code
 //Handles input and search narrowing down
 function input(searched) {
-    var filtered = Item.list.map(item => item.searched(searched.toLowerCase())).filter(item => item != null)
+    var filtered = Item.list.map(item => item.name != "Food" && item.searched(searched.toLowerCase())).filter(item => item != false)
 
     list("FilteredItems", filtered)
 };
@@ -25,7 +25,9 @@ function clicked(item) {
 }
 //sets selItem to Item and shows item desc and info
 function setSelItem(newItem) {
-    selItem = Item.list.find(item => item.name == newItem)
+    if (newItem instanceof Item) selItem = newItem
+    else selItem = Item.list.find(item => item.name == newItem)
+    
     if (selItem == null) {
         document.getElementById("selItemData").innerHTML = ""
     } else {
@@ -39,29 +41,15 @@ function setSelItem(newItem) {
 };
 //filter the crafts possible with the item+list in html and how to create the item+list them in html
 function listCrafts() {
-    var filtered = Craft.list.filter(
-        craft => ((craft.a.name.toLowerCase() == selItem.name.toLowerCase()) || (craft.b.name.toLowerCase() == selItem.name.toLowerCase()))
-    );
-    list('CraftTo', filtered.map(craft => {
-        let first = (craft.a.name.toLowerCase() == selItem.name.toLowerCase()) ? craft.a : craft.b
-        let second = (craft.a.name.toLowerCase() == selItem.name.toLowerCase()) ? craft.b : craft.a
-        return `${first.display()} + ${second.display()} = ${craft.out.display()}`
-    }))
+    var filtered = Craft.list.filter(craft => (craft.a == selItem || craft.b == selItem));
+    list('CraftTo', filtered.map(craft => 
+        craft.display(craft.a.name.toLowerCase() != selItem.name.toLowerCase())
+    ))
 
-    var filtered = Craft.list.filter(craft => craft.out.name.toLowerCase() == selItem.name.toLowerCase());
-    list("CraftFrom", filtered.map(craft => `${craft.a.display()} + ${craft.b.display()} = ${craft.out.display()}`))
-    //list("CraftFrom", filtered.map(crafts => mapOnClickAB(crafts.a, crafts.b, crafts.out)))
+    var filtered = Craft.list.filter(craft => craft.out == selItem);
+    list("CraftFrom", filtered.map(craft => craft.display()))
 };
-//maps on click jump events for items for B,C
 
-
-function mapOnClickBC(a, b, out) {
-    return (
-        `<span>${a.name}</span> +
-        <span class='clickable' onclick='setSelItem("${b.name}")'>${b.name}</span> =
-        <span class='clickable' onclick='setSelItem("${out.name}")'>${out.name}</span>`
-    )
-}
 //lists every element of "value" in tag "ElId"
 function list(ElId, array) {
     if (array.length > 0) {

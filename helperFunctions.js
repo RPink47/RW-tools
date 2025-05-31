@@ -21,6 +21,6 @@ function tableHower(highlight, css) {
     styleRule.style.backgroundColor = highlight ? 'rgb(117, 117, 117)' : ""
 }
 
-function insertHower(ruleName){
-    return " onpointerenter='tableHower(true, \"" + ruleName + "\")' onpointerleave='tableHower(false, \"" + ruleName + "\")'"
+function insertHower(...ruleNames){
+    return " onpointerenter='"+ruleNames.map(rule => "tableHower(true, \"" + rule + "\")").join("; ")+"' onpointerleave='"+ruleNames.map(rule => "tableHower(false, \"" + rule + "\")").join("; ")+"' "
 }
